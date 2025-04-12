@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+enum ProductType {
+  phone
+  device
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+model Product {
+  id        Int         @id @default(autoincrement())
+  owner_id  Int
+  name      String      @db.VarChar(20)
+  price     Int
+  type      ProductType
+  detail    String      @db.VarChar(100)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  owner     User        @relation(fields: [owner_id], references: [id])
+}
