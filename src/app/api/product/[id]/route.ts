@@ -107,3 +107,41 @@ export async function GET(request: Request, { params }: { params: { id: string }
     )
   }
 }
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+  try {
+    if (!params?.id) {
+      return NextResponse.json({ error: "Product ID is required" }, { status: 400 });
+    }
+
+    const id = Number.parseInt(params.id, 10);
+
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "Invalid product ID" }, { status: 400 });
+    }
+
+    const existingProduct = await prisma.product.findUnique({
+      where: { id },
+    });
+
+    if (!existingProduct) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    await prisma.product.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ message: "Product deleted successfully" }, { status: 200 });
+  } catch (error: any) {
+    console.error("Error deleting product:", error);
+    return NextResponse.json(
+      {
+        error:
+          process.env.NODE_ENV === "development"
+            ? error.message || "Failed to delete product"
+            : "Failed to delete product",
+      },
+      { status: 500 }
+    );
+  }
+}
