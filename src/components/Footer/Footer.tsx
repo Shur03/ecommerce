@@ -20,7 +20,7 @@ export default function Footer() {
         </a>
 
         <a
-          href="https://github.com/Shur03"
+          href="https://github.com/Shur03/ecommerce"
           className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
         >
           <Github />
