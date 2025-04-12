@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 export default function Header({ email }: HeaderProps) {
   return (
-    <header className="bg-gray-100 shadow-md p-4 rounded-lg mb-3">
+    <header className="bg-gray-100 text-gray-600 shadow-md p-4 rounded-lg mb-3">
       <div className="container mx-auto flex justify-between items-center rounded-lg ">
         <Link href={"/product"}>
           <Image
